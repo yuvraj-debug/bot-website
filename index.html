@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Discord Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #252540);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background: #00000080;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .btn {
+      background-color: #5865F2;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .btn:hover {
+      background: #4752C4;
+      transform: scale(1.05);
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .features {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .feature-card {
+      background: #2b2c3e;
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 5px;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #151521;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Awesome Discord Bot</h1>
+    <p>Manage tickets, play games, and send messages in style!</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot" class="btn">➕ Add to Your Server</a>
+  </header>
+
+  <section>
+    <h2>📘 Bot Command Overview</h2>
+    <div class="features">
+      <div class="feature-card"><span class="emoji">🎟️</span><strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
+      <div class="feature-card"><span class="emoji">🎮</span><strong>Mini-Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
+      <div class="feature-card"><span class="emoji">📬</span><strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 YourBotName. All rights reserved.
+  </footer>
+
+</body>
+</html>
