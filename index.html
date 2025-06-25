@@ -4,25 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyrok Team</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Roboto', sans-serif;
       background: radial-gradient(ellipse at center, #0d0d2b 0%, #090a1a 100%);
       color: #fff;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
     }
+
     .bubble {
       position: absolute;
       bottom: -100px;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 50%;
       animation: rise 20s infinite ease-in;
+      z-index: 0;
     }
+
     @keyframes rise {
       0% {
         transform: translateY(0) scale(1);
@@ -33,85 +40,119 @@
         opacity: 0;
       }
     }
+
     header {
       text-align: center;
-      padding: 60px 20px;
-      background: transparent;
+      padding: 80px 20px 50px;
+      position: relative;
+      z-index: 1;
     }
+
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3em;
+      font-size: 3.5em;
+      background: linear-gradient(90deg, #00fff7, #5865F2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
     }
+
     p {
       font-size: 1.2em;
-      margin-top: -10px;
       color: #ccc;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
     }
+
     .btn {
       background-color: #5865F2;
       color: white;
       border: none;
-      padding: 15px 30px;
+      padding: 15px 35px;
       font-size: 1em;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 30px;
       text-decoration: none;
+      box-shadow: 0 8px 20px rgba(88, 101, 242, 0.3);
     }
+
     .btn:hover {
       background: #4752C4;
       transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
     }
+
     section {
-      padding: 40px 20px;
+      padding: 60px 20px;
       max-width: 1000px;
       margin: auto;
+      position: relative;
+      z-index: 1;
     }
+
     h2 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
       font-family: 'Orbitron', sans-serif;
+      font-size: 2.5em;
+      color: #ffffff;
     }
+
     .features {
       display: grid;
-      gap: 20px;
+      gap: 25px;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
+
     .feature-card {
       background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
+      padding: 25px;
+      border-radius: 16px;
       transition: transform 0.3s, box-shadow 0.3s;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
+
     .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
+
     .emoji {
       font-size: 1.5em;
       margin-right: 5px;
     }
+
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 25px;
       background-color: #0a0a1f;
       font-size: 0.9em;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Optional scroll animation */
+    html {
+      scroll-behavior: smooth;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Bubbles -->
+  <!-- Floating Background Bubbles -->
   <script>
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
       const bubble = document.createElement("div");
       bubble.className = "bubble";
       bubble.style.left = Math.random() * 100 + "vw";
       bubble.style.animationDuration = 10 + Math.random() * 15 + "s";
-      bubble.style.width = bubble.style.height = 10 + Math.random() * 40 + "px";
+      const size = 10 + Math.random() * 40;
+      bubble.style.width = bubble.style.height = size + "px";
       document.body.appendChild(bubble);
     }
   </script>
