@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyrok Team</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
@@ -93,17 +92,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .typewriter {
-      font-size: 1.2em;
-      color: #ccc;
+    .typewriter-wrapper {
+      display: inline-block;
       overflow: hidden;
       border-right: 2px solid #fff;
       white-space: nowrap;
-      margin: 20px auto;
-      width: 0;
-      animation: typing 4s steps(60), blink .75s step-end infinite;
+      animation: typing 4s steps(60, end) forwards, blink .75s step-end infinite;
     }
-    @keyframes typing { to { width: 100%; } }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
     @keyframes blink { 50% { border-color: transparent; } }
 
     .btn {
@@ -119,6 +115,35 @@
     .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 30px #e100ff;
+    }
+
+    .nebula {
+      position: absolute;
+      top: 40%; left: 50%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #9e00ff33, transparent 70%);
+      filter: blur(60px);
+      z-index: -2;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit {
+      position: absolute;
+      width: 300px; height: 300px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 50%;
+      animation: orbit 20s linear infinite;
+      top: 50%; left: 50%;
+      transform-origin: center center;
+    }
+    .orbit .planet {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(150px, -50%);
+    }
+    @keyframes orbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     section {
@@ -161,6 +186,8 @@
 <div class="stars"></div>
 <div class="planet saturn"></div>
 <div class="planet jupiter"></div>
+<div class="nebula"></div>
+<div class="orbit"><div class="planet" style="width:40px;height:40px;background:#6ef;box-shadow:0 0 10px #6ef;"></div></div>
 
 <script>
   window.addEventListener('load', ()=> {
@@ -168,21 +195,21 @@
   });
 
   const stars = document.querySelector('.stars');
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 200; i++) {
     const s = document.createElement('div');
     s.className = 'star';
     let size = Math.random() * 2 + 1;
     s.style.width = s.style.height = size + 'px';
     s.style.top = Math.random() * 100 + 'vh';
     s.style.left = Math.random() * 100 + 'vw';
-    s.style.animationDuration = 2 + Math.random() * 2 + 's';
+    s.style.animationDuration = 2 + Math.random() * 3 + 's';
     stars.appendChild(s);
   }
 </script>
 
 <header>
   <h1>Zyrok Team</h1>
-  <p class="typewriter">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
+  <p class="typewriter-wrapper">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
   <a href="#" class="btn">➕ Add to Your Server</a>
 </header>
 
