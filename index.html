@@ -30,10 +30,12 @@
       100% { background-position: 0% 50%; }
     }
 
-    .stars, .constellations {
+    .stars {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
       pointer-events: none;
     }
@@ -44,7 +46,6 @@
       border-radius: 50%;
       opacity: 0.7;
       animation: twinkle 2s infinite ease-in-out alternate;
-      transition: transform 0.2s ease;
     }
 
     @keyframes twinkle {
@@ -142,19 +143,11 @@
 
     .meteor {
       position: absolute;
-      width: 100px;
+      width: 120px;
       height: 2px;
-      background: linear-gradient(to right, white, transparent);
+      background: linear-gradient(to left, white, transparent);
       opacity: 0.6;
       z-index: 2;
-      transform: rotate(-45deg);
-      animation: meteorFall 5s linear infinite;
-    }
-
-    @keyframes meteorFall {
-      0% { top: -10vh; left: 110vw; opacity: 0; }
-      10% { opacity: 1; }
-      100% { top: 120vh; left: -10vw; opacity: 0; }
     }
 
     header {
@@ -274,13 +267,7 @@
       <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
       <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
       <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
-      <div class="feature-card">📝 <strong>Application System</strong><br>
-        ✍️ !addques &lt;question&gt;<br>
-        ⚖️ !setoptions Option|Cooldown,...<br>
-        📃 !setchannel #channel<br>
-        🚀 !deploy<br>
-        ♻️ !reset
-      </div>
+      <div class="feature-card">📝 <strong>Application System</strong><br>➕ !addques &lt;question&gt;<br>⚙️ !setoptions Option|Cooldown,...<br>📺 !setchannel #channel<br>🚀 !deploy<br>🔄 !reset</div>
     </div>
   </section>
 
@@ -291,6 +278,7 @@
   <script>
     const starsContainer = document.getElementById('stars-container');
     const stars = [];
+
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
       star.className = 'star';
@@ -300,32 +288,58 @@
       star.style.left = Math.random() * 100 + 'vw';
       star.style.animationDuration = 2 + Math.random() * 3 + 's';
       starsContainer.appendChild(star);
-      stars.push(star);
+      stars.push({ el: star, x: 0, y: 0 });
     }
 
-    window.addEventListener('mousemove', (e) => {
-      stars.forEach(star => {
-        const starRect = star.getBoundingClientRect();
-        const dx = e.clientX - (starRect.left + starRect.width / 2);
-        const dy = e.clientY - (starRect.top + starRect.height / 2);
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 100) {
-          const angle = Math.atan2(dy, dx);
-          const moveX = Math.cos(angle) * 10;
-          const moveY = Math.sin(angle) * 10;
-          star.style.transform = `translate(${moveX}px, ${moveY}px)`;
-        } else {
-          star.style.transform = 'translate(0, 0)';
-        }
-      });
+    let mouseX = 0, mouseY = 0;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
 
-    for (let i = 0; i < 5; i++) {
+    function animateStars() {
+      stars.forEach(obj => {
+        const star = obj.el;
+        const rect = star.getBoundingClientRect();
+        const dx = mouseX - (rect.left + rect.width / 2);
+        const dy = mouseY - (rect.top + rect.height / 2);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const force = dist < 100 ? (100 - dist) / 100 : 0;
+        obj.x += (dx * force - obj.x) * 0.1;
+        obj.y += (dy * force - obj.y) * 0.1;
+        star.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    animateStars();
+
+    for (let i = 0; i < 8; i++) {
       const meteor = document.createElement('div');
       meteor.className = 'meteor';
-      meteor.style.top = Math.random() * -20 + 'vh';
-      meteor.style.left = Math.random() * 100 + 'vw';
-      meteor.style.animationDelay = (Math.random() * 10) + 's';
+
+      const angle = Math.random() * 30 - 15; // -15 to +15 degrees
+      const rad = angle * Math.PI / 180;
+
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * -100;
+      const dist = window.innerHeight + 200;
+
+      meteor.style.top = startY + 'px';
+      meteor.style.left = startX + 'px';
+      meteor.style.transform = `rotate(${angle}deg)`;
+
+      meteor.animate([
+        { transform: `translate(0, 0) rotate(${angle}deg)`, opacity: 1 },
+        { transform: `translate(${Math.cos(rad) * -dist}px, ${Math.sin(rad) * dist}px) rotate(${angle}deg)`, opacity: 0 }
+      ], {
+        duration: 4000 + Math.random() * 2000,
+        delay: Math.random() * 8000,
+        iterations: Infinity,
+        easing: 'ease-out'
+      });
+
       document.body.appendChild(meteor);
     }
   </script>
