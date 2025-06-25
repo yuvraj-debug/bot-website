@@ -68,20 +68,17 @@
       }
     }
 
-    .planet {
-      position: absolute;
-      border-radius: 50%;
-      z-index: 1;
-      animation: drift 60s linear infinite;
-    }
-
     .planet.saturn {
+      position: absolute;
       width: 160px;
       height: 160px;
+      border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #ffcc66, #cc6600);
       box-shadow: 0 0 20px rgba(255, 204, 102, 0.5);
       top: 10%;
       left: -160px;
+      animation: drift 60s linear infinite;
+      z-index: 1;
     }
 
     .planet.saturn::before {
@@ -102,6 +99,31 @@
       }
     }
 
+    /* Meteor */
+    .meteor {
+      position: fixed;
+      top: -100px;
+      left: -100px;
+      width: 6px;
+      height: 80px;
+      background: linear-gradient(45deg, #fff, #9e00ff, transparent);
+      opacity: 0.8;
+      z-index: 3;
+      transform: rotate(45deg);
+      animation: meteor-fall 5s linear infinite;
+    }
+
+    @keyframes meteor-fall {
+      0% {
+        transform: translate(-100px, -100px) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(120vw, 120vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
     header {
       text-align: center;
       padding: 140px 20px 60px;
@@ -112,9 +134,17 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-      background: linear-gradient(to right, #7f00ff, #e100ff);
+      background: linear-gradient(270deg, #ff0040, #ff8c00, #ffff00, #00ff90, #00cfff, #7f00ff, #ff0040);
+      background-size: 1400% 1400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: rainbow 12s ease infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .intro-text {
@@ -195,8 +225,9 @@
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
 
-  <!-- Saturn Planet -->
+  <!-- Planets and Meteors -->
   <div class="planet saturn"></div>
+  <div class="meteor"></div>
 
   <!-- Header -->
   <header>
@@ -244,7 +275,7 @@
       document.getElementById('loader').style.display = 'none';
     });
 
-    // Stars
+    // Generate stars
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
