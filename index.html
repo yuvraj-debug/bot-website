@@ -21,6 +21,7 @@
       color: #fff;
       overflow-x: hidden;
       position: relative;
+      scroll-behavior: smooth;
     }
 
     @keyframes backgroundRGB {
@@ -75,6 +76,22 @@
       height: 30px;
       border-radius: 50%;
       background: rgba(255,255,255,0.2);
+    }
+
+    .moon {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: #ddd;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(255,255,255,0.3);
+      animation: orbit 10s linear infinite;
+      transform-origin: 50px 50px;
+    }
+
+    @keyframes orbit {
+      0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
     }
 
     @keyframes drift {
@@ -214,8 +231,20 @@
 <body>
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
-  <div class="planet saturn"></div>
-  <div class="meteor"></div>
+  <div class="planet saturn">
+    <div class="moon"></div>
+  </div>
+  <!-- Meteors -->
+  <script>
+    for (let i = 0; i < 5; i++) {
+      const meteor = document.createElement('div');
+      meteor.className = 'meteor';
+      meteor.style.top = Math.random() * -20 + 'vh';
+      meteor.style.left = Math.random() * 100 + 'vw';
+      meteor.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(meteor);
+    }
+  </script>
 
   <!-- Header -->
   <header>
@@ -239,6 +268,7 @@
     &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
   </footer>
 
+  <!-- Stars Script -->
   <script>
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
