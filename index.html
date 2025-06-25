@@ -31,6 +31,15 @@
       scroll-behavior: smooth;
     }
 
+    audio {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: rgba(0,0,0,0.5);
+      border-radius: 10px;
+    }
+
     #loader {
       position: fixed;
       top: 0;
@@ -53,26 +62,23 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .stars {
+    .stars, .nebula {
       position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
       left: 0;
       z-index: 0;
-      background: black;
+      pointer-events: none;
+    }
+
+    .stars {
       background-image:
         radial-gradient(white 1px, transparent 1px),
         radial-gradient(white 1px, transparent 1px),
         radial-gradient(white 1px, transparent 1px);
-      background-size:
-        600px 600px,
-        800px 800px,
-        1000px 1000px;
-      background-position:
-        0 0,
-        200px 200px,
-        400px 400px;
+      background-size: 600px 600px, 800px 800px, 1000px 1000px;
+      background-position: 0 0, 200px 200px, 400px 400px;
       animation: animateStars 200s linear infinite;
     }
 
@@ -81,33 +87,16 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-image:
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(white 1px, transparent 1px);
+      background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
       background-size: 200px 200px, 300px 300px;
       animation: twinkle 4s linear infinite;
     }
 
-    .shooting-star {
-      position: fixed;
-      top: 10%;
-      left: -100px;
-      width: 3px;
-      height: 3px;
-      background: white;
-      box-shadow: 0 0 20px white;
-      animation: shoot 5s ease-in-out infinite;
-    }
-
-    @keyframes shoot {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(1500px, 600px) scale(0.2);
-        opacity: 0;
-      }
+    .nebula {
+      background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.08), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(0, 191, 255, 0.1), transparent 60%),
+                  radial-gradient(circle at 50% 20%, rgba(255, 20, 147, 0.06), transparent 60%);
+      animation: animateNebula 300s linear infinite;
     }
 
     @keyframes animateStars {
@@ -120,62 +109,55 @@
       50% { opacity: 0.3; }
     }
 
-    .saturn {
-      position: fixed;
-      bottom: -150px;
-      right: -150px;
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle at 30% 30%, #ffc4ec, #5e3b99);
-      border-radius: 50%;
-      z-index: 0;
-      animation: rotate 80s linear infinite;
-      box-shadow: 0 0 50px rgba(200, 160, 255, 0.4);
+    @keyframes animateNebula {
+      0% { background-position: 0 0, 0 0, 0 0; }
+      100% { background-position: 5000px 3000px, 4000px 2000px, 3000px 1000px; }
     }
 
-    .saturn::before {
+    .shooting-star {
+      position: fixed;
+      top: 10%;
+      left: -100px;
+      width: 3px;
+      height: 3px;
+      background: white;
+      box-shadow: 0 0 20px white;
+      animation: shoot 5s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes shoot {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(1500px, 600px) scale(0.2); opacity: 0; }
+    }
+
+    .comet {
+      position: fixed;
+      top: 300px;
+      left: -200px;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 25px white;
+      animation: cometTrail 12s linear infinite;
+    }
+
+    .comet::after {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotateZ(-25deg);
-      width: 450px;
-      height: 80px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center, rgba(200, 160, 255, 0.3), transparent);
-      box-shadow: 0 0 40px rgba(255, 200, 255, 0.2);
+      width: 120px;
+      height: 3px;
+      left: -130px;
+      top: 1.5px;
+      background: linear-gradient(to right, white, transparent);
+      transform: rotate(15deg);
+      opacity: 0.5;
     }
 
-    .planet {
-      position: fixed;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #e6f7ff, #3399cc);
-      box-shadow: 0 0 25px rgba(150, 220, 255, 0.3);
-      animation: floatPlanet 160s linear infinite;
-      z-index: 0;
-    }
-
-    .planet:nth-child(1) {
-      top: 40%;
-      left: -100px;
-    }
-
-    .planet:nth-child(2) {
-      top: 75%;
-      right: -200px;
-      background: radial-gradient(circle at 30% 30%, #ffe6cc, #cc6600);
-    }
-
-    @keyframes floatPlanet {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(250vw); }
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes cometTrail {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(2000px); opacity: 0; }
     }
 
     .ufo {
@@ -192,197 +174,36 @@
     }
 
     .ufo::before {
-      content: '';
+      content: '👽';
       position: absolute;
-      top: 100%;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 30px;
-      height: 10px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+      font-size: 22px;
+      animation: wave 1.2s infinite ease-in-out;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(15deg); }
     }
 
     @keyframes flyAcross {
       0% { transform: translateX(0); }
       100% { transform: translateX(220vw); }
     }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 100vh;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 4em;
-      background: var(--gradient);
-      background-size: 300% 300%;
-      animation: gradientMove 6s ease infinite;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    #typewriter {
-      font-size: 1.25em;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin-bottom: 30px;
-      min-height: 50px;
-    }
-
-    .btn {
-      background-color: var(--primary);
-      color: white;
-      padding: 14px 32px;
-      font-size: 1em;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-decoration: none;
-      box-shadow: 0 12px 28px rgba(142, 68, 173, 0.4);
-      margin-top: 20px;
-    }
-
-    .btn:hover {
-      background: #732d91;
-      transform: scale(1.07);
-    }
-
-    section {
-      margin-top: 60px;
-      padding: 60px 20px;
-      width: 100%;
-      max-width: 1200px;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5em;
-      margin-bottom: 40px;
-    }
-
-    .features {
-      display: grid;
-      gap: 30px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-
-    .feature-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(14px);
-      padding: 25px;
-      border-radius: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      font-size: 1em;
-      position: relative;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-    }
-
-    .emoji {
-      font-size: 1.6em;
-      margin-right: 8px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      background: rgba(10, 10, 30, 0.8);
-      font-size: 1em;
-      color: #aaa;
-      margin-top: 100px;
-      position: relative;
-      z-index: 1;
-    }
   </style>
 </head>
 <body>
   <div id="loader"><h2>Launching into the galaxy...</h2></div>
   <div class="stars"></div>
+  <div class="nebula"></div>
   <div class="shooting-star"></div>
-  <div class="saturn"></div>
-  <div class="planet"></div>
-  <div class="planet"></div>
+  <div class="comet"></div>
   <div class="ufo"></div>
-
-  <div class="container warp-transition">
-    <h1>Zyrok Team</h1>
-    <div id="typewriter"></div>
-    <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Invite to Your Server</a>
-  </div>
-
-  <section class="warp-transition">
-    <h2>🌌 Explore Our Commands</h2>
-    <div class="features">
-      <div class="feature-card">
-        <span class="emoji">🎟️</span><strong>Ticket System</strong><br>
-        📝 !ticket &lt;message&gt;<br>
-        ➕ !option &lt;emoji&gt; &lt;label&gt;<br>
-        🎭 !ticketviewer @role<br>
-        📂 !ticketcategory #channel<br>
-        🚀 !deployticketpanel
-      </div>
-      <div class="feature-card">
-        <span class="emoji">🎮</span><strong>Mini‑Games</strong><br>
-        🎯 !guess &lt;number&gt;<br>
-        🧠 !trivia<br>
-        🔤 !scramble<br>
-        📄 !rps &lt;rock|paper|scissors&gt;
-      </div>
-      <div class="feature-card">
-        <span class="emoji">📬</span><strong>Messaging Tools</strong><br>
-        💬 !msg &lt;message&gt;<br>
-        📨 !dm @role &lt;message&gt;
-      </div>
-    </div>
-  </section>
-
-  <footer class="warp-transition">
-    &copy; 2025 Zyrok Team — Powered by galaxies of code and stardust.
-  </footer>
-
-  <script>
-    window.addEventListener("load", () => {
-      document.getElementById("loader").style.display = "none";
-    });
-
-    const text = "Automate your server. Play cosmic games. Launch support like never before 🚀";
-    const el = document.getElementById("typewriter");
-    let idx = 0;
-    function type() {
-      if (idx < text.length) {
-        el.innerHTML += text.charAt(idx);
-        idx++;
-        setTimeout(type, 35);
-      }
-    }
-    window.onload = type;
-  </script>
+  <audio controls autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_67d36e3c0d.mp3?filename=space-ambient-145038.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
 </body>
 </html>
