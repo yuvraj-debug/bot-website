@@ -53,19 +53,6 @@
       }
     }
 
-    .hover-dot {
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      box-shadow: 0 0 10px rgba(255,255,255,0.8);
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: transform 0.05s ease-out;
-    }
-
     .nebula {
       position: absolute;
       width: 400px;
@@ -103,6 +90,15 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    .constellation {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      opacity: 0.6;
+      transition: transform 0.5s ease-out;
     }
 
     .planet.saturn {
@@ -152,6 +148,33 @@
       }
     }
 
+    .meteor {
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, white, transparent);
+      opacity: 0.6;
+      z-index: 2;
+      transform: rotate(-45deg);
+      animation: meteorFall 5s linear infinite;
+    }
+
+    @keyframes meteorFall {
+      0% {
+        top: -10vh;
+        left: 110vw;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        top: 120vh;
+        left: -10vw;
+        opacity: 0;
+      }
+    }
+
     header {
       text-align: center;
       padding: 140px 20px 60px;
@@ -161,45 +184,100 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.8em;
-      color: #fff;
-      animation: glowPulse 5s ease-in-out infinite;
-      text-shadow: 0 0 5px #9e00ff, 0 0 10px #9e00ff, 0 0 20px #9e00ff;
-      transition: transform 0.3s ease;
+      font-size: 3.5em;
+      background: linear-gradient(90deg, #9e00ff, #00ffd5, #9e00ff);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientSlide 15s linear infinite, neonGlow 8s ease-in-out infinite;
+      text-shadow: 0 0 10px rgba(158, 0, 255, 0.5), 0 0 30px rgba(0,255,255,0.2);
     }
 
-    h1:hover {
+    @keyframes neonGlow {
+      0%, 100% { text-shadow: 0 0 10px #9e00ff, 0 0 20px #9e00ff, 0 0 30px #00ffe5; }
+      50% { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffee; }
+    }
+
+    @keyframes gradientSlide {
+      0% { background-position: 0% }
+      100% { background-position: 200% }
+    }
+
+    .btn {
+      background: #9e00ff;
+      padding: 16px 32px;
+      border-radius: 40px;
+      font-size: 1rem;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 0 20px #9e00ff;
+      transition: transform 0.2s, box-shadow 0.3s;
+      display: inline-block;
+      margin-top: 40px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn:hover {
       transform: scale(1.05);
-      text-shadow: 0 0 10px #fff, 0 0 20px #9e00ff, 0 0 40px #9e00ff;
+      box-shadow: 0 0 30px #e100ff;
     }
 
-    @keyframes glowPulse {
-      0%, 100% {
-        text-shadow: 0 0 5px #9e00ff, 0 0 10px #9e00ff, 0 0 20px #9e00ff;
-      }
-      50% {
-        text-shadow: 0 0 10px #ff00d4, 0 0 15px #ff00d4, 0 0 30px #ff00d4;
-      }
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+      z-index: 2;
+      position: relative;
     }
 
-    .intro-text {
-      font-size: 1.4em;
-      color: #ccc;
-      margin-top: 20px;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #fff;
-      width: 22ch;
-      animation: typing 4s steps(22) 1s 1 normal both, blink 0.7s infinite;
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2em;
+      margin-bottom: 40px;
+      text-align: center;
     }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 22ch }
+    .features {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
-    @keyframes blink {
-      50% { border-color: transparent; }
+    .feature-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(158,0,255,0.3);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #0a0a1a;
+      color: #aaa;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 10px #fff, 0 0 20px #9e00ff;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.8;
+      transition: transform 0.1s;
     }
   </style>
 </head>
@@ -213,14 +291,27 @@
   <div class="planet saturn">
     <div class="moon"></div>
   </div>
-  <div class="hover-dot" id="hoverDot"></div>
+  <div class="cursor-dot" id="cursor-dot"></div>
+
+  <header>
+    <h1>Zyrok Team</h1>
+    <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
+  </header>
+
+  <section>
+    <h2>📘 Bot Command Overview</h2>
+    <div class="features">
+      <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
+      <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
+      <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
+  </footer>
 
   <script>
-    const dot = document.getElementById('hoverDot');
-    document.body.addEventListener('mousemove', e => {
-      dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
@@ -249,11 +340,22 @@
         dot.style.transform = `translateY(${move}px)`;
       });
     });
-  </script>
 
-  <header>
-    <h1>Zyrok Team</h1>
-    <p class="intro-text">Manage tickets, play games, and automate your server</p>
-  </header>
+    for (let i = 0; i < 5; i++) {
+      const meteor = document.createElement('div');
+      meteor.className = 'meteor';
+      meteor.style.top = Math.random() * -20 + 'vh';
+      meteor.style.left = Math.random() * 100 + 'vw';
+      meteor.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(meteor);
+    }
+
+    // cursor glow effect
+    const dot = document.getElementById('cursor-dot');
+    window.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+    });
+  </script>
 </body>
 </html>
