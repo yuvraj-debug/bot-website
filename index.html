@@ -88,6 +88,28 @@
       animation: twinkle 4s linear infinite;
     }
 
+    .shooting-star {
+      position: fixed;
+      top: 10%;
+      left: -100px;
+      width: 3px;
+      height: 3px;
+      background: white;
+      box-shadow: 0 0 20px white;
+      animation: shoot 5s ease-in-out infinite;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(1500px, 600px) scale(0.2);
+        opacity: 0;
+      }
+    }
+
     @keyframes animateStars {
       0% { background-position: 0 0, 200px 200px, 400px 400px; }
       100% { background-position: -10000px 5000px, -8000px 4000px, -6000px 3000px; }
@@ -107,7 +129,7 @@
       background: radial-gradient(circle at 30% 30%, #ffc4ec, #5e3b99);
       border-radius: 50%;
       z-index: 0;
-      animation: drift 60s linear infinite, rotate 80s linear infinite;
+      animation: rotate 80s linear infinite;
       box-shadow: 0 0 50px rgba(200, 160, 255, 0.4);
     }
 
@@ -129,31 +151,26 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffe4b3, #cc6600);
-      box-shadow: 0 0 25px rgba(255, 200, 150, 0.3);
-      animation: floatPlanet 120s linear infinite;
+      background: radial-gradient(circle at 30% 30%, #e6f7ff, #3399cc);
+      box-shadow: 0 0 25px rgba(150, 220, 255, 0.3);
+      animation: floatPlanet 160s linear infinite;
       z-index: 0;
     }
 
     .planet:nth-child(1) {
-      top: 30%;
-      left: -150px;
+      top: 40%;
+      left: -100px;
     }
 
     .planet:nth-child(2) {
-      top: 70%;
+      top: 75%;
       right: -200px;
-      background: radial-gradient(circle, #aee6f9, #3399cc);
+      background: radial-gradient(circle at 30% 30%, #ffe6cc, #cc6600);
     }
 
     @keyframes floatPlanet {
       0% { transform: translateX(0); }
-      100% { transform: translateX(200vw); }
-    }
-
-    @keyframes drift {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-600px, -400px); }
+      100% { transform: translateX(250vw); }
     }
 
     @keyframes rotate {
@@ -163,20 +180,33 @@
 
     .ufo {
       position: fixed;
-      top: 50px;
-      left: -200px;
-      width: 100px;
-      height: 50px;
-      background: radial-gradient(ellipse at center, #ccc, #888);
+      top: 80px;
+      left: -150px;
+      width: 120px;
+      height: 60px;
+      background: radial-gradient(ellipse at center, #bbb, #555);
       border-radius: 50% 50% 40% 40% / 50% 50% 60% 60%;
-      animation: flyAcross 20s linear infinite;
-      z-index: 1;
-      box-shadow: 0 0 20px rgba(200,255,255,0.3);
+      animation: flyAcross 25s linear infinite;
+      z-index: 2;
+      box-shadow: 0 0 25px rgba(200,255,255,0.6);
+    }
+
+    .ufo::before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 10px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
 
     @keyframes flyAcross {
       0% { transform: translateX(0); }
-      100% { transform: translateX(200vw); }
+      100% { transform: translateX(220vw); }
     }
 
     .container {
@@ -275,26 +305,6 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
     }
 
-    .feature-card::after {
-      content: 'Click to copy this command';
-      position: absolute;
-      bottom: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      font-size: 0.8em;
-      padding: 5px 10px;
-      border-radius: 8px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .feature-card:hover::after {
-      opacity: 1;
-    }
-
     .emoji {
       font-size: 1.6em;
       margin-right: 8px;
@@ -315,6 +325,7 @@
 <body>
   <div id="loader"><h2>Launching into the galaxy...</h2></div>
   <div class="stars"></div>
+  <div class="shooting-star"></div>
   <div class="saturn"></div>
   <div class="planet"></div>
   <div class="planet"></div>
