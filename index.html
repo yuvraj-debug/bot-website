@@ -85,24 +85,33 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-    }
-
-    .rgb {
+      background: linear-gradient(270deg, #ff0040, #ff7f50, #ffff00, #00ff90, #00cfff, #7f00ff, #ff0040);
+      background-size: 2000% 2000%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: smoothRGB 15s linear infinite;
-      background-size: 200% 200%;
+      animation: smoothRGB 15s linear infinite, glowPulse 3s ease-in-out infinite;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
     }
 
-    .zy { background-image: linear-gradient(270deg, #ff0040, #ff7f50); }
-    .ro { background-image: linear-gradient(270deg, #ff7f50, #ffff00); }
-    .kt { background-image: linear-gradient(270deg, #00ff90, #00cfff); }
-    .eam { background-image: linear-gradient(270deg, #7f00ff, #ff0040); }
+    h1:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    }
 
     @keyframes smoothRGB {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(255,255,255,0.2);
+      }
+      50% {
+        text-shadow: 0 0 25px rgba(255,255,255,0.6);
+      }
     }
 
     .intro-text {
@@ -183,12 +192,7 @@
 
   <!-- Header -->
   <header>
-    <h1>
-      <span class="rgb zy">Zy</span>
-      <span class="rgb ro">ro</span>
-      <span class="rgb kt">kT</span>
-      <span class="rgb eam">eam</span>
-    </h1>
+    <h1>Zyrok Team</h1>
     <p class="intro-text">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
