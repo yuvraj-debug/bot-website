@@ -6,11 +6,7 @@
   <title>Zyrok Team</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       height: 100%;
@@ -43,6 +39,7 @@
       background: white;
       border-radius: 50%;
       opacity: 0.7;
+      transition: transform 0.1s linear;
     }
 
     .nebula {
@@ -232,9 +229,7 @@
   <div class="nebula"></div>
   <div class="nebula"></div>
   <div class="stars" id="stars-container"></div>
-  <div class="planet saturn">
-    <div class="moon"></div>
-  </div>
+  <div class="planet saturn"><div class="moon"></div></div>
 
   <header>
     <h1>Zyrok Team</h1>
@@ -248,7 +243,7 @@
       <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
       <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
       <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
-      <div class="feature-card">📝 <strong>Application System</strong><br>➕ !addques &lt;question&gt;<br>⚙️ !setoptions Option|Cooldown,...<br>📺 !setchannel #channel<br>🚀 !deploy<br>🗑️ !reset</div>
+      <div class="feature-card">📝 <strong>Application System</strong><br>❓ !addques &lt;question&gt;<br>⚙️ !setoptions Option|Cooldown,...<br>📢 !setchannel #channel<br>🚀 !deploy<br>🔁 !reset</div>
     </div>
   </section>
 
@@ -263,39 +258,34 @@
     for (let i = 0; i < 300; i++) {
       const star = document.createElement('div');
       star.className = 'star';
-      const size = Math.random() * 2 + 0.5;
+      const size = Math.random() * 2 + 1;
       star.style.width = star.style.height = size + 'px';
       star.style.top = Math.random() * 100 + 'vh';
       star.style.left = Math.random() * 100 + 'vw';
       starsContainer.appendChild(star);
-      stars.push({ el: star, vx: 0, vy: 0 });
+      stars.push(star);
     }
 
-    let mouseX = 0, mouseY = 0;
-
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    function animateStars() {
+    window.addEventListener('mousemove', (e) => {
+      const cx = e.clientX;
+      const cy = e.clientY;
       stars.forEach(star => {
-        const rect = star.el.getBoundingClientRect();
-        const dx = mouseX - (rect.left + rect.width / 2);
-        const dy = mouseY - (rect.top + rect.height / 2);
+        const rect = star.getBoundingClientRect();
+        const sx = rect.left + rect.width / 2;
+        const sy = rect.top + rect.height / 2;
+        const dx = cx - sx;
+        const dy = cy - sy;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          star.vx += dx * 0.002;
-          star.vy += dy * 0.002;
+        if (dist < 150) {
+          const strength = (150 - dist) / 150;
+          const moveX = dx * strength * 0.5;
+          const moveY = dy * strength * 0.5;
+          star.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        } else {
+          star.style.transform = `translate(0px, 0px)`;
         }
-        star.vx *= 0.92;
-        star.vy *= 0.92;
-        star.el.style.transform = `translate(${star.vx}px, ${star.vy}px)`;
       });
-      requestAnimationFrame(animateStars);
-    }
-
-    animateStars();
+    });
   </script>
 </body>
 </html>
