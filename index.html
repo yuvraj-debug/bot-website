@@ -85,12 +85,12 @@
 
     .meteor {
       position: absolute;
-      width: 4px;
-      height: 80px;
-      background: linear-gradient(to bottom, white, transparent);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, white, transparent);
       opacity: 0.6;
       z-index: 2;
-      transform: rotate(45deg);
+      transform: rotate(-45deg);
       animation: meteorFall 5s linear infinite;
     }
 
@@ -120,26 +120,23 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-      background: linear-gradient(270deg, #0d0d2b, #0b0a26, #0d0d2b);
-      background-size: 600% 600%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: backgroundRGB 30s ease infinite, glowPulse 3s ease-in-out infinite;
-      text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 30px #ff00d4, 0 0 60px #00f0ff;
+      color: #ffffff;
+      animation: glowPulse 5s ease-in-out infinite;
+      text-shadow: 0 0 5px #9e00ff, 0 0 10px #9e00ff, 0 0 20px #9e00ff;
       transition: transform 0.3s ease;
     }
 
     h1:hover {
       transform: scale(1.05);
-      text-shadow: 0 0 10px #fff, 0 0 20px #ff00d4, 0 0 40px #00f0ff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #9e00ff, 0 0 40px #9e00ff;
     }
 
     @keyframes glowPulse {
       0%, 100% {
-        text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        text-shadow: 0 0 5px #9e00ff, 0 0 10px #9e00ff, 0 0 20px #9e00ff;
       }
       50% {
-        text-shadow: 0 0 20px rgba(255,255,255,0.6);
+        text-shadow: 0 0 10px #ff00d4, 0 0 15px #ff00d4, 0 0 30px #ff00d4;
       }
     }
 
