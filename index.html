@@ -6,19 +6,42 @@
   <title>Zyrok Team</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --primary: #5865F2;
+      --background: #0d0d2b;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-light: #eee;
+      --text-dark: #0d0d2b;
+      --gradient: linear-gradient(90deg, #00ffe0, #5865f2, #a855f7);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(120deg, #0d0d2b, #1b1b3a);
-      color: #fff;
+      background: var(--background);
+      color: var(--text-light);
       overflow-x: hidden;
       min-height: 100vh;
-      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: #0d0d2b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
     }
 
     .bubble {
@@ -31,14 +54,8 @@
     }
 
     @keyframes rise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-120vh) scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
     }
 
     .container {
@@ -56,7 +73,7 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 4em;
-      background: linear-gradient(90deg, #00ffe0, #5865f2, #a855f7);
+      background: var(--gradient);
       background-size: 300% 300%;
       animation: gradientMove 8s ease infinite;
       -webkit-background-clip: text;
@@ -70,15 +87,16 @@
       100% { background-position: 0% 50%; }
     }
 
-    p {
+    #typewriter {
       font-size: 1.25em;
       color: #cccccc;
       max-width: 600px;
       margin-bottom: 30px;
+      min-height: 50px;
     }
 
     .btn {
-      background-color: #5865F2;
+      background-color: var(--primary);
       color: white;
       border: none;
       padding: 14px 32px;
@@ -100,6 +118,12 @@
       padding: 60px 20px;
       width: 100%;
       max-width: 1100px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
@@ -115,14 +139,13 @@
     }
 
     .feature-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
       padding: 25px;
       border-radius: 18px;
       transition: transform 0.3s, box-shadow 0.3s;
       font-size: 1em;
-      color: #eee;
     }
 
     .feature-card:hover {
@@ -141,44 +164,18 @@
       background-color: #0a0a1f;
       font-size: 0.95em;
       color: #aaa;
-      z-index: 1;
-      position: relative;
       margin-top: 80px;
-    }
-
-    @media screen and (max-width: 480px) {
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 1.8em;
-      }
-      .btn {
-        padding: 12px 24px;
-        font-size: 0.95em;
-      }
     }
   </style>
 </head>
 <body>
+  <div id="loader">
+    <h2 style="font-family:'Orbitron', sans-serif;">Loading...</h2>
+  </div>
 
-  <!-- Bubbles -->
-  <script>
-    for (let i = 0; i < 30; i++) {
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.style.left = Math.random() * 100 + "vw";
-      bubble.style.animationDuration = 10 + Math.random() * 20 + "s";
-      const size = 10 + Math.random() * 50;
-      bubble.style.width = bubble.style.height = size + "px";
-      document.body.appendChild(bubble);
-    }
-  </script>
-
-  <!-- Main Content -->
   <div class="container">
     <h1>Zyrok Team</h1>
-    <p>Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
+    <div id="typewriter"></div>
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </div>
 
@@ -212,5 +209,35 @@
     &copy; 2025 Zyrok Team — Made with 💫 in the galaxy of Discord bots.
   </footer>
 
+  <script>
+    // Bubbles
+    for (let i = 0; i < 30; i++) {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.style.left = Math.random() * 100 + "vw";
+      bubble.style.animationDuration = 10 + Math.random() * 20 + "s";
+      const size = 10 + Math.random() * 50;
+      bubble.style.width = bubble.style.height = size + "px";
+      document.body.appendChild(bubble);
+    }
+
+    // Loader
+    window.addEventListener("load", () => {
+      document.getElementById("loader").style.display = "none";
+    });
+
+    // Typewriter
+    const text = "Manage tickets, play games, and automate your server like a cosmic pro 🚀";
+    const el = document.getElementById("typewriter");
+    let idx = 0;
+    function type() {
+      if (idx < text.length) {
+        el.innerHTML += text.charAt(idx);
+        idx++;
+        setTimeout(type, 40);
+      }
+    }
+    window.onload = type;
+  </script>
 </body>
 </html>
