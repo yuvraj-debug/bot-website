@@ -7,7 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     html, body {
@@ -16,9 +18,9 @@
       background: radial-gradient(ellipse at center, #0d0d2b, #000010);
       color: #fff;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* Loader */
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -27,32 +29,38 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 1000;
     }
+
     .spinner {
-      width: 60px; height: 60px;
+      width: 60px;
+      height: 60px;
       border: 6px solid rgba(255,255,255,0.2);
       border-top-color: #9e00ff;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Stars */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     .stars {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -3;
-      overflow: hidden;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
     }
+
     .star {
       position: absolute;
       background: white;
       border-radius: 50%;
-      opacity: 0.8;
+      opacity: 0.7;
       animation: twinkle 2s infinite ease-in-out alternate;
     }
+
     @keyframes twinkle {
       to {
         opacity: 0.2;
@@ -60,44 +68,56 @@
       }
     }
 
-    /* Planets */
     .planet {
       position: absolute;
       border-radius: 50%;
+      z-index: 1;
       animation: drift 60s linear infinite;
     }
+
     .planet.saturn {
-      width: 160px; height: 160px;
+      width: 160px;
+      height: 160px;
       background: radial-gradient(circle at 30% 30%, #ffcc66, #cc6600);
       box-shadow: 0 0 20px rgba(255, 204, 102, 0.5);
-      top: 10%; left: -160px;
+      top: 10%;
+      left: -160px;
     }
+
     .planet.saturn::before {
       content: '';
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%) rotate(30deg);
-      width: 250px; height: 30px;
+      width: 250px;
+      height: 30px;
       border-radius: 50%;
       background: rgba(255,255,255,0.2);
     }
+
     .planet.jupiter {
-      width: 140px; height: 140px;
+      width: 140px;
+      height: 140px;
       background: linear-gradient(45deg, #ff9966, #ff5e62);
       box-shadow: 0 0 20px rgba(255, 153, 102, 0.5);
-      bottom: 15%; right: -150px;
+      bottom: 15%;
+      right: -150px;
     }
+
     @keyframes drift {
       to {
         transform: translateX(120vw) rotate(360deg);
       }
     }
 
-    /* Header */
     header {
       text-align: center;
-      padding: 120px 20px 40px;
+      padding: 140px 20px 40px;
+      position: relative;
+      z-index: 2;
     }
+
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
@@ -107,23 +127,22 @@
     }
 
     .typewriter {
+      display: inline-block;
       font-size: 1.2em;
       color: #ccc;
-      display: inline-block;
-      white-space: nowrap;
       overflow: hidden;
+      white-space: nowrap;
       border-right: 2px solid #fff;
-      animation:
-        typing 4s steps(50, end) 1 forwards,
-        blink .75s step-end 5;
       width: 0;
-      margin: 20px auto 40px;
+      animation: typing 4s steps(60, end) 1 forwards, blink 0.7s step-end 5;
+      margin-top: 20px;
     }
 
     @keyframes typing {
       from { width: 0; }
       to { width: 100%; }
     }
+
     @keyframes blink {
       50% { border-color: transparent; }
     }
@@ -136,51 +155,60 @@
       color: white;
       text-decoration: none;
       box-shadow: 0 0 20px #9e00ff;
-      transition: transform .2s, box-shadow .3s;
+      transition: transform 0.2s, box-shadow 0.3s;
       display: inline-block;
-      margin-top: 40px;
+      margin-top: 50px;
+      z-index: 2;
+      position: relative;
     }
+
     .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 30px #e100ff;
     }
 
-    /* Nebula */
     .nebula {
       position: absolute;
-      top: 50%; left: 50%;
-      width: 600px; height: 600px;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
       background: radial-gradient(circle, #9e00ff33, transparent 70%);
       filter: blur(60px);
-      z-index: -2;
+      z-index: 0;
       transform: translate(-50%, -50%);
     }
 
-    /* Section & Features */
     section {
       padding: 80px 20px;
       max-width: 1100px;
       margin: auto;
+      z-index: 2;
+      position: relative;
     }
+
     h2 {
       font-family: 'Orbitron', sans-serif;
       font-size: 2.2em;
       margin-bottom: 40px;
       text-align: center;
     }
+
     .features {
       display: grid;
       gap: 30px;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
+
     .feature-card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 15px;
       padding: 25px;
       backdrop-filter: blur(10px);
-      transition: transform .3s, box-shadow .3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
+
     .feature-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 10px 30px rgba(158,0,255,0.3);
@@ -191,6 +219,8 @@
       padding: 30px 20px;
       background: #0a0a1a;
       color: #aaa;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
@@ -198,30 +228,30 @@
   <!-- Loader -->
   <div id="loader"><div class="spinner"></div></div>
 
-  <!-- Background Stars -->
-  <div class="stars"></div>
+  <!-- Stars -->
+  <div class="stars" id="stars-container"></div>
 
-  <!-- Planets -->
+  <!-- Planets + Nebula -->
   <div class="planet saturn"></div>
   <div class="planet jupiter"></div>
   <div class="nebula"></div>
 
-  <!-- JS: Loader + Star Generator -->
+  <!-- JS for loader & stars -->
   <script>
     window.addEventListener('load', () => {
       document.getElementById('loader').style.display = 'none';
     });
 
-    const stars = document.querySelector('.stars');
+    const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
+      const star = document.createElement('div');
+      star.className = 'star';
       const size = Math.random() * 2 + 1;
-      s.style.width = s.style.height = size + 'px';
-      s.style.top = Math.random() * 100 + 'vh';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.animationDuration = 2 + Math.random() * 2 + 's';
-      stars.appendChild(s);
+      star.style.width = star.style.height = size + 'px';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDuration = 2 + Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
     }
   </script>
 
@@ -232,13 +262,30 @@
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
 
-  <!-- Features -->
+  <!-- Commands Section -->
   <section>
     <h2>📘 Bot Command Overview</h2>
     <div class="features">
-      <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
-      <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
-      <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
+      <div class="feature-card">
+        🎟️ <strong>Ticket System</strong><br>
+        📝 !ticket &lt;message&gt;<br>
+        ➕ !option &lt;emoji&gt; &lt;label&gt;<br>
+        🎭 !ticketviewer @role<br>
+        📂 !ticketcategory #channel<br>
+        🚀 !deployticketpanel
+      </div>
+      <div class="feature-card">
+        🎮 <strong>Mini‑Games</strong><br>
+        🎯 !guess &lt;number&gt;<br>
+        🧠 !trivia<br>
+        🔤 !scramble<br>
+        📄 !rps &lt;rock|paper|scissors&gt;
+      </div>
+      <div class="feature-card">
+        📬 <strong>Messaging Tools</strong><br>
+        💬 !msg &lt;message&gt;<br>
+        📨 !dm @role &lt;message&gt;
+      </div>
     </div>
   </section>
 
