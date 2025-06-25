@@ -21,7 +21,6 @@
       position: relative;
     }
 
-    /* Loader */
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -69,6 +68,40 @@
       }
     }
 
+    .planet {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 1;
+      animation: drift 60s linear infinite;
+    }
+
+    .planet.saturn {
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle at 30% 30%, #ffcc66, #cc6600);
+      box-shadow: 0 0 20px rgba(255, 204, 102, 0.5);
+      top: 10%;
+      left: -160px;
+    }
+
+    .planet.saturn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(30deg);
+      width: 250px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+    }
+
+    @keyframes drift {
+      to {
+        transform: translateX(120vw) rotate(360deg);
+      }
+    }
+
     header {
       text-align: center;
       padding: 140px 20px 60px;
@@ -84,25 +117,10 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .typewriter {
-      display: inline-block;
+    .intro-text {
       font-size: 1.2em;
       color: #ccc;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #fff;
-      width: 0;
-      animation: typing 4s steps(60, end) 1 forwards, blink 0.7s step-end 6;
       margin-top: 20px;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
     }
 
     .btn {
@@ -113,19 +131,18 @@
       color: white;
       text-decoration: none;
       box-shadow: 0 0 20px #9e00ff;
-      transition: transform 0.2s, box-shadow 0.3s, opacity 0.5s ease;
+      transition: transform 0.2s, box-shadow 0.3s;
       display: inline-block;
       margin-top: 40px;
-      opacity: 0;
-      pointer-events: none;
+      z-index: 2;
+      position: relative;
     }
 
-    .btn.show {
-      opacity: 1;
-      pointer-events: auto;
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #e100ff;
     }
 
-    /* Section and Features */
     section {
       padding: 80px 20px;
       max-width: 1100px;
@@ -178,11 +195,14 @@
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
 
+  <!-- Saturn Planet -->
+  <div class="planet saturn"></div>
+
   <!-- Header -->
   <header>
     <h1>Zyrok Team</h1>
-    <p class="typewriter" id="typewriter-text">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
-    <a id="add-btn" href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
+    <p class="intro-text">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
 
   <!-- Features -->
@@ -217,13 +237,14 @@
     &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
   </footer>
 
+  <!-- Script -->
   <script>
     // Hide loader
     window.addEventListener('load', () => {
       document.getElementById('loader').style.display = 'none';
     });
 
-    // Add stars to background
+    // Stars
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
@@ -235,13 +256,6 @@
       star.style.animationDuration = 2 + Math.random() * 3 + 's';
       starsContainer.appendChild(star);
     }
-
-    // Show button after typewriter animation ends
-    const btn = document.getElementById('add-btn');
-    const typewriter = document.getElementById('typewriter-text');
-    setTimeout(() => {
-      btn.classList.add('show');
-    }, 4100); // matches typing animation duration
   </script>
 </body>
 </html>
