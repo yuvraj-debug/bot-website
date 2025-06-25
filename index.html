@@ -98,35 +98,85 @@
       50% { opacity: 0.3; }
     }
 
-    .planet {
+    .saturn {
       position: fixed;
-      bottom: -80px;
-      right: -80px;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle at 30% 30%, #b388eb, #3c1f59);
+      bottom: -150px;
+      right: -150px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle at 30% 30%, #ffc4ec, #5e3b99);
       border-radius: 50%;
-      opacity: 0.3;
       z-index: 0;
-      animation: drift 90s linear infinite;
+      animation: drift 60s linear infinite, rotate 80s linear infinite;
+      box-shadow: 0 0 50px rgba(200, 160, 255, 0.4);
     }
 
-    .planet::before {
-      content: "";
+    .saturn::before {
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) rotateZ(-20deg);
-      width: 480px;
-      height: 60px;
-      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15), transparent);
+      transform: translate(-50%, -50%) rotateZ(-25deg);
+      width: 450px;
+      height: 80px;
       border-radius: 50%;
-      pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(200, 160, 255, 0.3), transparent);
+      box-shadow: 0 0 40px rgba(255, 200, 255, 0.2);
+    }
+
+    .planet {
+      position: fixed;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe4b3, #cc6600);
+      box-shadow: 0 0 25px rgba(255, 200, 150, 0.3);
+      animation: floatPlanet 120s linear infinite;
+      z-index: 0;
+    }
+
+    .planet:nth-child(1) {
+      top: 30%;
+      left: -150px;
+    }
+
+    .planet:nth-child(2) {
+      top: 70%;
+      right: -200px;
+      background: radial-gradient(circle, #aee6f9, #3399cc);
+    }
+
+    @keyframes floatPlanet {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(200vw); }
     }
 
     @keyframes drift {
       0% { transform: translate(0, 0); }
-      100% { transform: translate(-500px, -500px); }
+      100% { transform: translate(-600px, -400px); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .ufo {
+      position: fixed;
+      top: 50px;
+      left: -200px;
+      width: 100px;
+      height: 50px;
+      background: radial-gradient(ellipse at center, #ccc, #888);
+      border-radius: 50% 50% 40% 40% / 50% 50% 60% 60%;
+      animation: flyAcross 20s linear infinite;
+      z-index: 1;
+      box-shadow: 0 0 20px rgba(200,255,255,0.3);
+    }
+
+    @keyframes flyAcross {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(200vw); }
     }
 
     .container {
@@ -265,7 +315,10 @@
 <body>
   <div id="loader"><h2>Launching into the galaxy...</h2></div>
   <div class="stars"></div>
+  <div class="saturn"></div>
   <div class="planet"></div>
+  <div class="planet"></div>
+  <div class="ufo"></div>
 
   <div class="container warp-transition">
     <h1>Zyrok Team</h1>
