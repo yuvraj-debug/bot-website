@@ -44,6 +44,7 @@
       border-radius: 50%;
       opacity: 0.7;
       animation: twinkle 2s infinite ease-in-out alternate;
+      transition: transform 0.2s ease;
     }
 
     @keyframes twinkle {
@@ -90,15 +91,6 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
-    }
-
-    .constellation {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: #fff;
-      opacity: 0.6;
-      transition: transform 0.5s ease-out;
     }
 
     .planet.saturn {
@@ -160,19 +152,9 @@
     }
 
     @keyframes meteorFall {
-      0% {
-        top: -10vh;
-        left: 110vw;
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        top: 120vh;
-        left: -10vw;
-        opacity: 0;
-      }
+      0% { top: -10vh; left: 110vw; opacity: 0; }
+      10% { opacity: 1; }
+      100% { top: 120vh; left: -10vw; opacity: 0; }
     }
 
     header {
@@ -185,17 +167,19 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-      background: linear-gradient(90deg, #9e00ff, #00ffd5, #9e00ff);
+      background: linear-gradient(90deg, #a166ff, #00ffd5, #a166ff);
       background-size: 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: gradientSlide 15s linear infinite, neonGlow 8s ease-in-out infinite;
-      text-shadow: 0 0 10px rgba(158, 0, 255, 0.5), 0 0 30px rgba(0,255,255,0.2);
+      animation: gradientSlide 15s linear infinite;
+      text-shadow: 0 0 6px rgba(158, 0, 255, 0.4), 0 0 15px rgba(0,255,255,0.15);
     }
 
-    @keyframes neonGlow {
-      0%, 100% { text-shadow: 0 0 10px #9e00ff, 0 0 20px #9e00ff, 0 0 30px #00ffe5; }
-      50% { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffee; }
+    .subtitle {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #ccc;
+      font-style: italic;
     }
 
     @keyframes gradientSlide {
@@ -266,19 +250,6 @@
       position: relative;
       z-index: 2;
     }
-
-    .cursor-dot {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 10px #fff, 0 0 20px #9e00ff;
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0.8;
-      transition: transform 0.1s;
-    }
   </style>
 </head>
 <body>
@@ -287,14 +258,13 @@
   <div class="nebula"></div>
   <div class="nebula"></div>
   <div class="stars" id="stars-container"></div>
-  <div class="constellations" id="constellation-container"></div>
   <div class="planet saturn">
     <div class="moon"></div>
   </div>
-  <div class="cursor-dot" id="cursor-dot"></div>
 
   <header>
     <h1>Zyrok Team</h1>
+    <div class="subtitle">Empowering Your Discord Server with Style 🚀</div>
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
 
@@ -313,6 +283,7 @@
 
   <script>
     const starsContainer = document.getElementById('stars-container');
+    const stars = [];
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
       star.className = 'star';
@@ -322,22 +293,23 @@
       star.style.left = Math.random() * 100 + 'vw';
       star.style.animationDuration = 2 + Math.random() * 3 + 's';
       starsContainer.appendChild(star);
+      stars.push(star);
     }
 
-    for (let i = 0; i < 40; i++) {
-      const point = document.createElement('div');
-      point.className = 'constellation';
-      point.style.top = Math.random() * 100 + 'vh';
-      point.style.left = Math.random() * 100 + 'vw';
-      point.style.width = '2px';
-      point.style.height = '2px';
-      document.getElementById('constellation-container').appendChild(point);
-    }
-
-    window.addEventListener('scroll', () => {
-      document.querySelectorAll('.constellation').forEach((dot, i) => {
-        const move = Math.sin(window.scrollY / 100 + i) * 5;
-        dot.style.transform = `translateY(${move}px)`;
+    window.addEventListener('mousemove', (e) => {
+      stars.forEach(star => {
+        const starRect = star.getBoundingClientRect();
+        const dx = e.clientX - (starRect.left + starRect.width / 2);
+        const dy = e.clientY - (starRect.top + starRect.height / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) {
+          const angle = Math.atan2(dy, dx);
+          const moveX = Math.cos(angle) * 10;
+          const moveY = Math.sin(angle) * 10;
+          star.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        } else {
+          star.style.transform = 'translate(0, 0)';
+        }
       });
     });
 
@@ -349,13 +321,6 @@
       meteor.style.animationDelay = (Math.random() * 10) + 's';
       document.body.appendChild(meteor);
     }
-
-    // cursor glow effect
-    const dot = document.getElementById('cursor-dot');
-    window.addEventListener('mousemove', e => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-    });
   </script>
 </body>
 </html>
