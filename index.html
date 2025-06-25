@@ -15,10 +15,18 @@
     html, body {
       height: 100%;
       font-family: 'Roboto', sans-serif;
-      background: radial-gradient(ellipse at center, #0d0d2b, #000010);
+      background: linear-gradient(270deg, #0d0d2b, #0b0a26, #0d0d2b);
+      background-size: 600% 600%;
+      animation: backgroundRGB 30s ease infinite;
       color: #fff;
       overflow-x: hidden;
       position: relative;
+    }
+
+    @keyframes backgroundRGB {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .stars {
@@ -75,6 +83,33 @@
       }
     }
 
+    .meteor {
+      position: absolute;
+      width: 4px;
+      height: 100px;
+      background: linear-gradient(to bottom, white, transparent);
+      opacity: 0.4;
+      z-index: 1;
+      transform: rotate(45deg);
+      animation: meteorFall 3s linear infinite;
+    }
+
+    @keyframes meteorFall {
+      0% {
+        top: -20vh;
+        left: 100vw;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        top: 120vh;
+        left: -20vw;
+        opacity: 0;
+      }
+    }
+
     header {
       text-align: center;
       padding: 140px 20px 60px;
@@ -85,18 +120,18 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-      background: linear-gradient(270deg, #ff007f, #ffcc00, #00ffd5, #ff007f);
-      background-size: 600% 600%;
+      background: linear-gradient(270deg, #00f0ff, #ff00d4, #ffcc00, #7fff00, #00f0ff);
+      background-size: 1000% 1000%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: smoothRGB 20s ease infinite, glowPulse 3s ease-in-out infinite;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      animation: smoothRGB 30s ease infinite, glowPulse 3s ease-in-out infinite;
+      text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 30px #ff00d4, 0 0 60px #00f0ff;
       transition: transform 0.3s ease;
     }
 
     h1:hover {
       transform: scale(1.05);
-      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff00d4, 0 0 40px #00f0ff;
     }
 
     @keyframes smoothRGB {
@@ -107,10 +142,10 @@
 
     @keyframes glowPulse {
       0%, 100% {
-        text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        text-shadow: 0 0 10px rgba(255,255,255,0.3);
       }
       50% {
-        text-shadow: 0 0 25px rgba(255,255,255,0.6);
+        text-shadow: 0 0 20px rgba(255,255,255,0.6);
       }
     }
 
@@ -189,6 +224,7 @@
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
   <div class="planet saturn"></div>
+  <div class="meteor"></div>
 
   <!-- Header -->
   <header>
