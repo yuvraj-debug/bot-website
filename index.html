@@ -4,114 +4,175 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyrok Team</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: radial-gradient(ellipse at center, #0d0d2b 0%, #090a1a 100%);
-      color: #fff;
+      background: radial-gradient(ellipse at center, #0d0d2b 0%, #000010 100%);
+      color: #ffffff;
       overflow-x: hidden;
       position: relative;
     }
+
+    /* Starfield with pure CSS */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: transparent;
+      box-shadow:
+        50vw 20vh white,
+        80vw 60vh #aaa,
+        30vw 90vh #ccc,
+        10vw 10vh #888,
+        70vw 30vh #999,
+        20vw 70vh #666,
+        60vw 90vh #aaa,
+        90vw 10vh #bbb,
+        40vw 50vh #ddd,
+        75vw 75vh #aaa,
+        15vw 35vh #eee,
+        25vw 85vh #ccc,
+        85vw 45vh #999;
+      animation: starScroll 120s linear infinite;
+    }
+
+    body::after {
+      transform: scale(1.5);
+      opacity: 0.3;
+      filter: blur(1px);
+      animation-duration: 180s;
+    }
+
+    @keyframes starScroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-100vh); }
+    }
+
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5em;
+      background: linear-gradient(to right, #7f00ff, #e100ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #c7c7ff;
+      margin-top: -10px;
+    }
+
+    .btn {
+      background-color: #9e00ff;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1em;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      text-decoration: none;
+      margin-top: 20px;
+      display: inline-block;
+      box-shadow: 0 0 15px #9e00ff;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #e100ff;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2em;
+      margin-bottom: 40px;
+      color: #ffffff;
+    }
+
+    .features {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(128, 0, 255, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(128, 0, 255, 0.4);
+    }
+
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #0a0a1a;
+      color: #999;
+      font-size: 0.9em;
+      border-top: 1px solid #1a1a2a;
+    }
+
+    /* Floating particles */
     .bubble {
       position: absolute;
       bottom: -100px;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 50%;
       animation: rise 20s infinite ease-in;
+      z-index: 0;
     }
+
     @keyframes rise {
       0% {
         transform: translateY(0) scale(1);
         opacity: 0.7;
       }
       100% {
-        transform: translateY(-120vh) scale(1.5);
+        transform: translateY(-120vh) scale(1.3);
         opacity: 0;
       }
-    }
-    header {
-      text-align: center;
-      padding: 60px 20px;
-      background: transparent;
-    }
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3em;
-    }
-    p {
-      font-size: 1.2em;
-      margin-top: -10px;
-      color: #ccc;
-    }
-    .btn {
-      background-color: #5865F2;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1em;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
-      display: inline-block;
-      margin-top: 20px;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background: #4752C4;
-      transform: scale(1.05);
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-family: 'Orbitron', sans-serif;
-    }
-    .features {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .feature-card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      backdrop-filter: blur(6px);
-    }
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-    .emoji {
-      font-size: 1.5em;
-      margin-right: 5px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #0a0a1f;
-      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Bubbles -->
+  <!-- Animated floating bubbles -->
   <script>
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
       const bubble = document.createElement("div");
       bubble.className = "bubble";
-      bubble.style.left = Math.random() * 100 + "vw";
-      bubble.style.animationDuration = 10 + Math.random() * 15 + "s";
-      bubble.style.width = bubble.style.height = 10 + Math.random() * 40 + "px";
+      const size = 8 + Math.random() * 20;
+      bubble.style.width = bubble.style.height = `${size}px`;
+      bubble.style.left = `${Math.random() * 100}vw`;
+      bubble.style.animationDuration = `${8 + Math.random() * 12}s`;
       document.body.appendChild(bubble);
     }
   </script>
