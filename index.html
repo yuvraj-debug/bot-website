@@ -53,6 +53,36 @@
       }
     }
 
+    .nebula {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle at center, rgba(0,255,255,0.1), transparent);
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: floatNebula 60s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .nebula:nth-child(1) {
+      top: 10%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .nebula:nth-child(2) {
+      top: 60%;
+      left: 70%;
+      background: radial-gradient(circle at center, rgba(255,0,255,0.1), transparent);
+      animation-delay: 30s;
+    }
+
+    @keyframes floatNebula {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.2) translate(50px, 50px); }
+    }
+
     .planet.saturn {
       position: absolute;
       width: 160px;
@@ -63,7 +93,7 @@
       top: 10%;
       left: -160px;
       animation: drift 60s linear infinite;
-      z-index: 1;
+      z-index: 2;
     }
 
     .planet.saturn::before {
@@ -131,7 +161,7 @@
       text-align: center;
       padding: 140px 20px 60px;
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
 
     h1 {
@@ -229,12 +259,15 @@
   </style>
 </head>
 <body>
+  <!-- Floating Effects -->
+  <div class="nebula"></div>
+  <div class="nebula"></div>
+
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
   <div class="planet saturn">
     <div class="moon"></div>
   </div>
-  <!-- Meteors -->
   <script>
     for (let i = 0; i < 5; i++) {
       const meteor = document.createElement('div');
@@ -246,14 +279,12 @@
     }
   </script>
 
-  <!-- Header -->
   <header>
     <h1>Zyrok Team</h1>
     <p class="intro-text">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
 
-  <!-- Features -->
   <section>
     <h2>📘 Bot Command Overview</h2>
     <div class="features">
@@ -263,12 +294,10 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
   </footer>
 
-  <!-- Stars Script -->
   <script>
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
