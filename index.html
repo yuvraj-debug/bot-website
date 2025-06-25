@@ -30,31 +30,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-
-    nav a:hover,
-    nav a.active {
-      color: #9e00ff;
-    }
-
     .stars, .constellations {
       position: fixed;
       top: 0; left: 0;
@@ -137,11 +112,6 @@
       left: -160px;
       animation: drift 60s linear infinite;
       z-index: 2;
-      transition: transform 0.4s ease;
-    }
-
-    .planet.saturn:hover {
-      transform: scale(1.1);
     }
 
     .planet.saturn::before {
@@ -172,20 +142,37 @@
       100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
     }
 
-    .comet {
-      position: absolute;
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(to right, white, transparent);
-      opacity: 0.8;
-      transform: rotate(-30deg);
-      animation: cometTrail 8s linear infinite;
+    @keyframes drift {
+      to {
+        transform: translateX(120vw) rotate(360deg);
+      }
     }
 
-    @keyframes cometTrail {
-      0% { top: -10vh; left: 120vw; opacity: 0; }
-      10% { opacity: 1; }
-      100% { top: 120vh; left: -20vw; opacity: 0; }
+    .meteor {
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, white, transparent);
+      opacity: 0.6;
+      z-index: 2;
+      transform: rotate(-45deg);
+      animation: meteorFall 5s linear infinite;
+    }
+
+    @keyframes meteorFall {
+      0% {
+        top: -10vh;
+        left: 110vw;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        top: 120vh;
+        left: -10vw;
+        opacity: 0;
+      }
     }
 
     header {
@@ -201,6 +188,12 @@
       color: #ffffff;
       animation: glowPulse 5s ease-in-out infinite;
       text-shadow: 0 0 5px #9e00ff, 0 0 10px #9e00ff, 0 0 20px #9e00ff;
+      transition: transform 0.3s ease;
+    }
+
+    h1:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 10px #fff, 0 0 20px #9e00ff, 0 0 40px #9e00ff;
     }
 
     @keyframes glowPulse {
@@ -284,11 +277,6 @@
   </style>
 </head>
 <body>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#contact">Contact</a>
-  </nav>
   <div class="aurora"></div>
   <div class="nebula"></div>
   <div class="nebula"></div>
@@ -312,20 +300,13 @@
       starsContainer.appendChild(star);
     }
 
-    for (let i = 0; i < 30; i++) {
-      const comet = document.createElement('div');
-      comet.className = 'comet';
-      comet.style.top = Math.random() * -50 + 'vh';
-      comet.style.left = Math.random() * 100 + 'vw';
-      comet.style.animationDelay = (Math.random() * 20) + 's';
-      document.body.appendChild(comet);
-    }
-
     for (let i = 0; i < 40; i++) {
       const point = document.createElement('div');
       point.className = 'constellation';
       point.style.top = Math.random() * 100 + 'vh';
       point.style.left = Math.random() * 100 + 'vw';
+      point.style.width = '2px';
+      point.style.height = '2px';
       document.getElementById('constellation-container').appendChild(point);
     }
 
@@ -335,26 +316,30 @@
         dot.style.transform = `translateY(${move}px)`;
       });
     });
+
+    for (let i = 0; i < 5; i++) {
+      const meteor = document.createElement('div');
+      meteor.className = 'meteor';
+      meteor.style.top = Math.random() * -20 + 'vh';
+      meteor.style.left = Math.random() * 100 + 'vw';
+      meteor.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(meteor);
+    }
   </script>
 
-  <header id="home">
+  <header>
     <h1>Zyrok Team</h1>
     <p class="intro-text">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
     <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
   </header>
 
-  <section id="features">
+  <section>
     <h2>📘 Bot Command Overview</h2>
     <div class="features">
       <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
       <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
       <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
     </div>
-  </section>
-
-  <section id="contact">
-    <h2>📨 Contact Us</h2>
-    <p style="text-align: center; color: #ccc;">Reach us via Discord or check the footer for more info.</p>
   </section>
 
   <footer>
