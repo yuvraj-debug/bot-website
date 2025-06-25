@@ -5,213 +5,198 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyrok Team</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
-    body {
-      margin: 0;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
       font-family: 'Roboto', sans-serif;
-      background: radial-gradient(ellipse at center, #0d0d2b 0%, #000010 100%);
-      color: #ffffff;
+      background: radial-gradient(ellipse at center, #0d0d2b, #000010);
+      color: #fff;
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* Starfield with pure CSS */
-    body::before, body::after {
-      content: '';
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #0d0d2b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .spinner {
+      width: 60px; height: 60px;
+      border: 6px solid rgba(255,255,255,0.2);
+      border-top-color: #9e00ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .stars {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -1;
-      background: transparent;
-      box-shadow:
-        50vw 20vh white,
-        80vw 60vh #aaa,
-        30vw 90vh #ccc,
-        10vw 10vh #888,
-        70vw 30vh #999,
-        20vw 70vh #666,
-        60vw 90vh #aaa,
-        90vw 10vh #bbb,
-        40vw 50vh #ddd,
-        75vw 75vh #aaa,
-        15vw 35vh #eee,
-        25vw 85vh #ccc,
-        85vw 45vh #999;
-      animation: starScroll 120s linear infinite;
+      z-index: -3;
+      pointer-events: none;
     }
-
-    body::after {
-      transform: scale(1.5);
-      opacity: 0.3;
-      filter: blur(1px);
-      animation-duration: 180s;
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
     }
+    @keyframes twinkle { to { opacity: 0.1; transform: scale(0.8); } }
 
-    @keyframes starScroll {
-      from { transform: translateY(0); }
-      to   { transform: translateY(-100vh); }
+    .planet {
+      position: absolute;
+      border-radius: 50%;
+      animation: drift 60s linear infinite;
+    }
+    .planet.saturn {
+      width: 160px; height: 160px;
+      background: radial-gradient(circle at 30% 30%, #ffcc66, #cc6600);
+      box-shadow: 0 0 20px rgba(255, 204, 102, 0.5);
+      top: 10%; left: -160px;
+    }
+    .planet.saturn::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(30deg);
+      width: 250px; height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+    }
+    .planet.jupiter {
+      width: 140px; height: 140px;
+      background: linear-gradient(45deg, #ff9966, #ff5e62);
+      box-shadow: 0 0 20px rgba(255, 153, 102, 0.5);
+      bottom: 15%; right: -150px;
+    }
+    @keyframes drift {
+      to { transform: translateX(120vw) rotate(360deg); }
     }
 
     header {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 120px 20px 60px;
+      z-index: 1;
     }
-
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.5em;
+      font-size: 3.8em;
       background: linear-gradient(to right, #7f00ff, #e100ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
-    p {
+    .typewriter {
       font-size: 1.2em;
-      color: #c7c7ff;
-      margin-top: -10px;
+      color: #ccc;
+      overflow: hidden;
+      border-right: 2px solid #fff;
+      white-space: nowrap;
+      margin: 20px auto;
+      width: 0;
+      animation: typing 4s steps(60), blink .75s step-end infinite;
     }
+    @keyframes typing { to { width: 100%; } }
+    @keyframes blink { 50% { border-color: transparent; } }
 
     .btn {
-      background-color: #9e00ff;
+      background: #9e00ff;
+      padding: 16px 32px;
+      border-radius: 40px;
+      font-size: 1rem;
       color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1em;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.3s;
       text-decoration: none;
-      margin-top: 20px;
-      display: inline-block;
-      box-shadow: 0 0 15px #9e00ff;
+      box-shadow: 0 0 20px #9e00ff;
+      transition: transform .2s, box-shadow .3s;
     }
-
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px #e100ff;
+      box-shadow: 0 0 30px #e100ff;
     }
 
     section {
-      padding: 60px 20px;
+      padding: 80px 20px;
       max-width: 1100px;
       margin: auto;
     }
-
     h2 {
-      text-align: center;
       font-family: 'Orbitron', sans-serif;
-      font-size: 2em;
+      font-size: 2.2em;
       margin-bottom: 40px;
-      color: #ffffff;
     }
-
     .features {
       display: grid;
       gap: 30px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-
     .feature-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 15px;
       padding: 25px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(128, 0, 255, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform .3s, box-shadow .3s;
     }
-
     .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(128, 0, 255, 0.4);
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(158,0,255,0.3);
     }
-
-    .emoji {
-      font-size: 1.5em;
-      margin-right: 5px;
-    }
-
     footer {
       text-align: center;
       padding: 30px 20px;
       background: #0a0a1a;
-      color: #999;
-      font-size: 0.9em;
-      border-top: 1px solid #1a1a2a;
-    }
-
-    /* Floating particles */
-    .bubble {
-      position: absolute;
-      bottom: -100px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
-      animation: rise 20s infinite ease-in;
-      z-index: 0;
-    }
-
-    @keyframes rise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-120vh) scale(1.3);
-        opacity: 0;
-      }
+      color: #aaa;
     }
   </style>
 </head>
 <body>
+<div id="loader"><div class="spinner"></div></div>
+<div class="stars"></div>
+<div class="planet saturn"></div>
+<div class="planet jupiter"></div>
 
-  <!-- Animated floating bubbles -->
-  <script>
-    for (let i = 0; i < 30; i++) {
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      const size = 8 + Math.random() * 20;
-      bubble.style.width = bubble.style.height = `${size}px`;
-      bubble.style.left = `${Math.random() * 100}vw`;
-      bubble.style.animationDuration = `${8 + Math.random() * 12}s`;
-      document.body.appendChild(bubble);
-    }
-  </script>
+<script>
+  window.addEventListener('load', ()=> {
+    document.getElementById('loader').style.display = 'none';
+  });
 
-  <header>
-    <h1>Zyrok Team</h1>
-    <p>Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
-    <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
-  </header>
+  const stars = document.querySelector('.stars');
+  for (let i = 0; i < 150; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    let size = Math.random() * 2 + 1;
+    s.style.width = s.style.height = size + 'px';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = 2 + Math.random() * 2 + 's';
+    stars.appendChild(s);
+  }
+</script>
 
-  <section>
-    <h2>📘 Bot Command Overview</h2>
-    <div class="features">
-      <div class="feature-card">
-        <span class="emoji">🎟️</span><strong>Ticket System</strong><br>
-        📝 !ticket &lt;message&gt;<br>
-        ➕ !option &lt;emoji&gt; &lt;label&gt;<br>
-        🎭 !ticketviewer @role<br>
-        📂 !ticketcategory #channel<br>
-        🚀 !deployticketpanel
-      </div>
-      <div class="feature-card">
-        <span class="emoji">🎮</span><strong>Mini‑Games</strong><br>
-        🎯 !guess &lt;number&gt;<br>
-        🧠 !trivia<br>
-        🔤 !scramble<br>
-        📄 !rps &lt;rock|paper|scissors&gt;
-      </div>
-      <div class="feature-card">
-        <span class="emoji">📬</span><strong>Messaging Tools</strong><br>
-        💬 !msg &lt;message&gt;<br>
-        📨 !dm @role &lt;message&gt;
-      </div>
-    </div>
-  </section>
+<header>
+  <h1>Zyrok Team</h1>
+  <p class="typewriter">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
+  <a href="#" class="btn">➕ Add to Your Server</a>
+</header>
 
-  <footer>
-    &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
-  </footer>
+<section>
+  <h2>📘 Bot Command Overview</h2>
+  <div class="features">
+    <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
+    <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
+    <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
+  </div>
+</section>
 
+<footer>
+  &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
+</footer>
 </body>
 </html>
