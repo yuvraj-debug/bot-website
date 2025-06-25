@@ -6,7 +6,10 @@
   <title>Zyrok Team</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
     html, body {
       height: 100%;
       font-family: 'Roboto', sans-serif;
@@ -15,6 +18,7 @@
       overflow-x: hidden;
     }
 
+    /* Loader */
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -34,12 +38,13 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* Stars */
     .stars {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: -3;
-      pointer-events: none;
+      overflow: hidden;
     }
     .star {
       position: absolute;
@@ -48,8 +53,14 @@
       opacity: 0.8;
       animation: twinkle 2s infinite ease-in-out alternate;
     }
-    @keyframes twinkle { to { opacity: 0.1; transform: scale(0.8); } }
+    @keyframes twinkle {
+      to {
+        opacity: 0.2;
+        transform: scale(0.8);
+      }
+    }
 
+    /* Planets */
     .planet {
       position: absolute;
       border-radius: 50%;
@@ -77,30 +88,45 @@
       bottom: 15%; right: -150px;
     }
     @keyframes drift {
-      to { transform: translateX(120vw) rotate(360deg); }
+      to {
+        transform: translateX(120vw) rotate(360deg);
+      }
     }
 
+    /* Header */
     header {
       text-align: center;
-      padding: 120px 20px 60px;
-      z-index: 1;
+      padding: 120px 20px 40px;
     }
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.8em;
+      font-size: 3.5em;
       background: linear-gradient(to right, #7f00ff, #e100ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .typewriter-wrapper {
+
+    .typewriter {
+      font-size: 1.2em;
+      color: #ccc;
       display: inline-block;
+      white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid #fff;
-      white-space: nowrap;
-      animation: typing 4s steps(60, end) forwards, blink .75s step-end infinite;
+      animation:
+        typing 4s steps(50, end) 1 forwards,
+        blink .75s step-end 5;
+      width: 0;
+      margin: 20px auto 40px;
     }
-    @keyframes typing { from { width: 0; } to { width: 100%; } }
-    @keyframes blink { 50% { border-color: transparent; } }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
 
     .btn {
       background: #9e00ff;
@@ -111,15 +137,18 @@
       text-decoration: none;
       box-shadow: 0 0 20px #9e00ff;
       transition: transform .2s, box-shadow .3s;
+      display: inline-block;
+      margin-top: 40px;
     }
     .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 30px #e100ff;
     }
 
+    /* Nebula */
     .nebula {
       position: absolute;
-      top: 40%; left: 50%;
+      top: 50%; left: 50%;
       width: 600px; height: 600px;
       background: radial-gradient(circle, #9e00ff33, transparent 70%);
       filter: blur(60px);
@@ -127,25 +156,7 @@
       transform: translate(-50%, -50%);
     }
 
-    .orbit {
-      position: absolute;
-      width: 300px; height: 300px;
-      border: 1px dashed rgba(255,255,255,0.1);
-      border-radius: 50%;
-      animation: orbit 20s linear infinite;
-      top: 50%; left: 50%;
-      transform-origin: center center;
-    }
-    .orbit .planet {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(150px, -50%);
-    }
-    @keyframes orbit {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
+    /* Section & Features */
     section {
       padding: 80px 20px;
       max-width: 1100px;
@@ -155,6 +166,7 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 2.2em;
       margin-bottom: 40px;
+      text-align: center;
     }
     .features {
       display: grid;
@@ -173,6 +185,7 @@
       transform: translateY(-10px);
       box-shadow: 0 10px 30px rgba(158,0,255,0.3);
     }
+
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -182,48 +195,56 @@
   </style>
 </head>
 <body>
-<div id="loader"><div class="spinner"></div></div>
-<div class="stars"></div>
-<div class="planet saturn"></div>
-<div class="planet jupiter"></div>
-<div class="nebula"></div>
-<div class="orbit"><div class="planet" style="width:40px;height:40px;background:#6ef;box-shadow:0 0 10px #6ef;"></div></div>
+  <!-- Loader -->
+  <div id="loader"><div class="spinner"></div></div>
 
-<script>
-  window.addEventListener('load', ()=> {
-    document.getElementById('loader').style.display = 'none';
-  });
+  <!-- Background Stars -->
+  <div class="stars"></div>
 
-  const stars = document.querySelector('.stars');
-  for (let i = 0; i < 200; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    let size = Math.random() * 2 + 1;
-    s.style.width = s.style.height = size + 'px';
-    s.style.top = Math.random() * 100 + 'vh';
-    s.style.left = Math.random() * 100 + 'vw';
-    s.style.animationDuration = 2 + Math.random() * 3 + 's';
-    stars.appendChild(s);
-  }
-</script>
+  <!-- Planets -->
+  <div class="planet saturn"></div>
+  <div class="planet jupiter"></div>
+  <div class="nebula"></div>
 
-<header>
-  <h1>Zyrok Team</h1>
-  <p class="typewriter-wrapper">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
-  <a href="#" class="btn">➕ Add to Your Server</a>
-</header>
+  <!-- JS: Loader + Star Generator -->
+  <script>
+    window.addEventListener('load', () => {
+      document.getElementById('loader').style.display = 'none';
+    });
 
-<section>
-  <h2>📘 Bot Command Overview</h2>
-  <div class="features">
-    <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
-    <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
-    <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
-  </div>
-</section>
+    const stars = document.querySelector('.stars');
+    for (let i = 0; i < 200; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2 + 1;
+      s.style.width = s.style.height = size + 'px';
+      s.style.top = Math.random() * 100 + 'vh';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDuration = 2 + Math.random() * 2 + 's';
+      stars.appendChild(s);
+    }
+  </script>
 
-<footer>
-  &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
-</footer>
+  <!-- Header -->
+  <header>
+    <h1>Zyrok Team</h1>
+    <p class="typewriter">Manage tickets, play games, and automate your server like a cosmic pro 🚀</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1383659368276430949&permissions=8&integration_type=0&scope=bot" class="btn">➕ Add to Your Server</a>
+  </header>
+
+  <!-- Features -->
+  <section>
+    <h2>📘 Bot Command Overview</h2>
+    <div class="features">
+      <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
+      <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
+      <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
+  </footer>
 </body>
 </html>
