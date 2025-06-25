@@ -21,30 +21,6 @@
       position: relative;
     }
 
-    #loader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: #0d0d2b;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255,255,255,0.2);
-      border-top-color: #9e00ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
     .stars {
       position: fixed;
       top: 0; left: 0;
@@ -99,31 +75,6 @@
       }
     }
 
-    /* Meteor */
-    .meteor {
-      position: fixed;
-      top: -100px;
-      left: -100px;
-      width: 6px;
-      height: 80px;
-      background: linear-gradient(45deg, #fff, #9e00ff, transparent);
-      opacity: 0.8;
-      z-index: 3;
-      transform: rotate(45deg);
-      animation: meteor-fall 5s linear infinite;
-    }
-
-    @keyframes meteor-fall {
-      0% {
-        transform: translate(-100px, -100px) rotate(45deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(120vw, 120vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
-
     header {
       text-align: center;
       padding: 140px 20px 60px;
@@ -135,13 +86,13 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
       background: linear-gradient(270deg, #ff0040, #ff8c00, #ffff00, #00ff90, #00cfff, #7f00ff, #ff0040);
-      background-size: 1400% 1400%;
+      background-size: 2000% 2000%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: rainbow 12s ease infinite;
+      animation: smoothRGB 20s ease infinite;
     }
 
-    @keyframes rainbow {
+    @keyframes smoothRGB {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
@@ -219,15 +170,9 @@
   </style>
 </head>
 <body>
-  <!-- Loader -->
-  <div id="loader"><div class="spinner"></div></div>
-
   <!-- Stars -->
   <div class="stars" id="stars-container"></div>
-
-  <!-- Planets and Meteors -->
   <div class="planet saturn"></div>
-  <div class="meteor"></div>
 
   <!-- Header -->
   <header>
@@ -240,26 +185,9 @@
   <section>
     <h2>📘 Bot Command Overview</h2>
     <div class="features">
-      <div class="feature-card">
-        🎟️ <strong>Ticket System</strong><br>
-        📝 !ticket &lt;message&gt;<br>
-        ➕ !option &lt;emoji&gt; &lt;label&gt;<br>
-        🎭 !ticketviewer @role<br>
-        📂 !ticketcategory #channel<br>
-        🚀 !deployticketpanel
-      </div>
-      <div class="feature-card">
-        🎮 <strong>Mini‑Games</strong><br>
-        🎯 !guess &lt;number&gt;<br>
-        🧠 !trivia<br>
-        🔤 !scramble<br>
-        📄 !rps &lt;rock|paper|scissors&gt;
-      </div>
-      <div class="feature-card">
-        📬 <strong>Messaging Tools</strong><br>
-        💬 !msg &lt;message&gt;<br>
-        📨 !dm @role &lt;message&gt;
-      </div>
+      <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
+      <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
+      <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
     </div>
   </section>
 
@@ -268,14 +196,7 @@
     &copy; 2025 Zyrok Team. Made with 💫 in the galaxy of Discord bots.
   </footer>
 
-  <!-- Script -->
   <script>
-    // Hide loader
-    window.addEventListener('load', () => {
-      document.getElementById('loader').style.display = 'none';
-    });
-
-    // Generate stars
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
