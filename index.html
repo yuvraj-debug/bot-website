@@ -213,6 +213,52 @@
       box-shadow: 0 10px 30px rgba(158,0,255,0.3);
     }
 
+    .command-category {
+      margin-bottom: 30px;
+    }
+
+    .command-category h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      color: #a166ff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .command-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .command-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px 15px;
+      border-radius: 8px;
+      border-left: 3px solid #9e00ff;
+    }
+
+    .command-name {
+      font-weight: bold;
+      color: #00ffd5;
+      margin-bottom: 5px;
+    }
+
+    .command-desc {
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .prefix-note {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -238,12 +284,147 @@
   </header>
 
   <section>
-    <h2>📘 Bot Command Overview</h2>
-    <div class="features">
-      <div class="feature-card">🎟️ <strong>Ticket System</strong><br>📝 !ticket &lt;message&gt;<br>➕ !option &lt;emoji&gt; &lt;label&gt;<br>🎭 !ticketviewer @role<br>📂 !ticketcategory #channel<br>🚀 !deployticketpanel</div>
-      <div class="feature-card">🎮 <strong>Mini‑Games</strong><br>🎯 !guess &lt;number&gt;<br>🧠 !trivia<br>🔤 !scramble<br>📄 !rps &lt;rock|paper|scissors&gt;</div>
-      <div class="feature-card">📬 <strong>Messaging Tools</strong><br>💬 !msg &lt;message&gt;<br>📨 !dm @role &lt;message&gt;</div>
-      <div class="feature-card">📝 <strong>Application System</strong><br>❓ !addques &lt;question&gt;<br>⚙️ !setoptions Option|Cooldown,...<br>📢 !setchannel #channel<br>🚀 !deploy<br>🔁 !reset</div>
+    <h2>🤖 Bot Help Menu</h2>
+    <p style="text-align: center; margin-bottom: 30px; color: #aaa;">Here are all the available commands:</p>
+    
+    <div class="command-category">
+      <h3>🎟️ Ticket System</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!ticket msg &lt;message&gt;</div>
+          <div class="command-desc">Set ticket panel message</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!setoptions general:💬, support:🛠️</div>
+          <div class="command-desc">Set dropdown options</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!setviewer @role</div>
+          <div class="command-desc">Set ticket viewer role</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!setticketcategory &lt;id&gt;</div>
+          <div class="command-desc">Set ticket category</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!deployticketpanel</div>
+          <div class="command-desc">Deploy ticket panel</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="command-category">
+      <h3>📋 Application System</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!app msg &lt;message&gt;</div>
+          <div class="command-desc">Set app panel message</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!addoptions Role:🛡️</div>
+          <div class="command-desc">Add role buttons</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!setappchannel &lt;id&gt;</div>
+          <div class="command-desc">Set app channel</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!deployapp</div>
+          <div class="command-desc">Deploy app panel</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!ques1 &lt;question&gt;</div>
+          <div class="command-desc">Set question 1</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="command-category">
+      <h3>⚠️ Moderation</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!warn @user [reason]</div>
+          <div class="command-desc">Warn a user</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!warnings @user</div>
+          <div class="command-desc">Check warnings</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!warnlimit &lt;number&gt;</div>
+          <div class="command-desc">Set warn limit for auto-kick</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="command-category">
+      <h3>🎮 Mini-Games</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!rps @user</div>
+          <div class="command-desc">Rock Paper Scissors</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!guess</div>
+          <div class="command-desc">Number guessing game</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!math</div>
+          <div class="command-desc">Math challenge</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!trivia</div>
+          <div class="command-desc">Trivia questions</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!type</div>
+          <div class="command-desc">Typing speed test</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="command-category">
+      <h3>📩 DM & Embeds</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!dm @role &lt;message&gt;</div>
+          <div class="command-desc">DM a role</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!embed &lt;color&gt; &lt;message&gt;</div>
+          <div class="command-desc">Create an embed</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="command-category">
+      <h3>ℹ️ Utilities</h3>
+      <div class="command-list">
+        <div class="command-item">
+          <div class="command-name">!userinfo @user</div>
+          <div class="command-desc">User information</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!serverinfo</div>
+          <div class="command-desc">Server information</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!ping</div>
+          <div class="command-desc">Bot latency</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!prems @role</div>
+          <div class="command-desc">Give role full bot access</div>
+        </div>
+        <div class="command-item">
+          <div class="command-name">!help</div>
+          <div class="command-desc">This menu</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="prefix-note">
+      Prefix: ! | All commands are prefix-based
     </div>
   </section>
 
